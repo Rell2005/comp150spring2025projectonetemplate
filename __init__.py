@@ -199,6 +199,7 @@ def print_status(player, monsters):
 
 
 # Modify combat to print the actual monster names
+# Modify combat to handle non-integer input gracefully
 def combat(player, monsters):
     # Start combat
     while player.is_alive() and any(monster.is_alive() for monster in monsters):
@@ -206,12 +207,18 @@ def combat(player, monsters):
 
         # Player's turn to attack
         print(f"{player.name}'s turn!")
-        target_idx = int(input("Choose a monster to attack (1 for first, 2 for second, etc.): ")) - 1
-        if target_idx >= 0 and target_idx < len(monsters) and monsters[target_idx].is_alive():
-            damage = player.attack_enemy(monsters[target_idx])
-            print(f"{player.name} attacks {monsters[target_idx].name} for {damage} damage!")
-        else:
-            print("Invalid target! No attack made.")
+        
+        # Adding try-except block to handle non-integer input
+        try:
+            target_idx = int(input("Choose a monster to attack (1 for first, 2 for second, etc.): ")) - 1
+            if target_idx >= 0 and target_idx < len(monsters) and monsters[target_idx].is_alive():
+                damage = player.attack_enemy(monsters[target_idx])
+                print(f"{player.name} attacks {monsters[target_idx].name} for {damage} damage!")
+            else:
+                print("Invalid target! No attack made.")
+        except ValueError:
+            # If input is not a valid integer, print "Input Invade" and continue
+            print("Input Invade! Please enter a valid number.")
         
         # Monsters' turn to attack
         if any(monster.is_alive() for monster in monsters):
@@ -230,7 +237,6 @@ def combat(player, monsters):
     if not any(monster.is_alive() for monster in monsters):
         print("\nYou have defeated all the monsters!")
         return True
-
 
 # Random event in the dungeon (treasure, trap, etc.)
 def random_event(player):
