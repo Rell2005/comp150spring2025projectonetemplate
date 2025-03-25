@@ -131,7 +131,8 @@ def __str__(self):
 
 
 def choose_character():
-    print("Welcome to the game!")
+    print("Welcome to the Tomb of the dead!,"
+    "Enter at your own peril ")
     print("Choose your character class:")
     print("1. Swordsman (Higher attack, lower health, no mana)")
     print("2. Mage (Lower attack, higher health, starting mana of 5 that increases with each monster defeated)")
